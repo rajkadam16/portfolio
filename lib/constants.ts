@@ -5,7 +5,7 @@ export const personalInfo = {
     email: "kadamraj623@gmail.com",
     phone: "(+91) 9321587317",
     location: "Mumbai, India",
-    resumeUrl: "https://docs.google.com/document/d/1hqzNeZF1VOUDvpy47gSwcD5M5r4O1lsz/edit?usp=sharing&ouid=106548809879874679933&rtpof=true&sd=true",
+    resumeUrl: "https://docs.google.com/document/d/1NJi5Oatrqvo4BWS4Tv7nRJ5xcFpW3HleOF3nRDpWoqM/edit?usp=sharing",
 };
 
 export const socialLinks = {

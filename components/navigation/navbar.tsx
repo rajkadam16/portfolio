@@ -62,7 +62,7 @@ export function Navbar() {
                         className="text-xl font-bold gradient-text cursor-pointer"
                         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     >
-                        {personalInfo.name.split(" ")[0]}
+                        Raj Kadam
                     </a>
 
                     {/* Desktop Navigation */}
