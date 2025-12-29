@@ -21,24 +21,42 @@ export function Navbar() {
     const [activeSection, setActiveSection] = useState("");
 
     useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+        let rafId: number | undefined;
+        let lastScrollY = 0;
 
-            // Update active section
-            const sections = navItems.map((item) => item.href.substring(1));
-            const current = sections.find((section) => {
-                const element = document.getElementById(section);
-                if (element) {
-                    const rect = element.getBoundingClientRect();
-                    return rect.top <= 100 && rect.bottom >= 100;
+        const handleScroll = () => {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+
+            rafId = requestAnimationFrame(() => {
+                const scrollY = window.scrollY;
+
+                // Only update if scroll changed significantly
+                if (Math.abs(scrollY - lastScrollY) > 10) {
+                    setIsScrolled(scrollY > 50);
+                    lastScrollY = scrollY;
                 }
-                return false;
+
+                // Update active section (throttled)
+                const sections = navItems.map((item) => item.href.substring(1));
+                const current = sections.find((section) => {
+                    const element = document.getElementById(section);
+                    if (element) {
+                        const rect = element.getBoundingClientRect();
+                        return rect.top <= 100 && rect.bottom >= 100;
+                    }
+                    return false;
+                });
+                if (current) setActiveSection(current);
             });
-            if (current) setActiveSection(current);
         };
 
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            if (rafId) cancelAnimationFrame(rafId);
+        };
     }, []);
 
     const scrollToSection = (href: string) => {

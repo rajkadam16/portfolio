@@ -3,6 +3,7 @@
 import { SectionHeading } from "@/components/ui/section-heading";
 import { about, personalInfo } from "@/lib/constants";
 import { Code2, Database, Layout, Server } from "lucide-react";
+import { ParallaxBackground } from "@/components/ui/parallax-background";
 
 const techIcons = [
     { Icon: Code2, name: "Frontend" },
@@ -13,8 +14,11 @@ const techIcons = [
 
 export function About() {
     return (
-        <section id="about" className="section-padding bg-secondary/20">
-            <div className="container-custom">
+        <section id="about" className="section-padding bg-secondary/20 relative overflow-hidden">
+            {/* Parallax Background Decorations */}
+            <ParallaxBackground />
+
+            <div className="container-custom relative z-10">
                 <SectionHeading
                     title="About Me"
                     subtitle="Get to know me better"

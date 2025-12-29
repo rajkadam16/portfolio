@@ -4,6 +4,7 @@ import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { BackToTop } from "@/components/ui/back-to-top";
 import { Hero } from "@/components/sections/hero";
 import { About } from "@/components/sections/about";
+import { AnalyticsDashboard } from "@/components/sections/analytics-dashboard";
 import { Skills } from "@/components/sections/skills";
 import { Projects } from "@/components/sections/projects";
 import { Experience } from "@/components/sections/experience";
@@ -17,6 +18,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <About />
+      <AnalyticsDashboard />
       <Skills />
       <Projects />
       <Experience />

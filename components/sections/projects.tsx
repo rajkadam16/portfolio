@@ -7,13 +7,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { projects } from "@/lib/constants";
+import { ParallaxBackground } from "@/components/ui/parallax-background";
 
 export function Projects() {
     const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
     return (
-        <section id="projects" className="section-padding bg-secondary/20">
-            <div className="container-custom">
+        <section id="projects" className="section-padding bg-secondary/20 relative overflow-hidden">
+            {/* Parallax Background Decorations */}
+            <ParallaxBackground />
+
+            <div className="container-custom relative z-10">
                 <SectionHeading
                     title="Featured Projects"
                     subtitle="Some of my best work"

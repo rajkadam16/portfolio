@@ -213,9 +213,10 @@ p {
     0 0 30px color-mix(in oklch, var(--color-primary) 20%, transparent);
 }
 
-/* Card hover effect */
+/* Card hover effect - OPTIMIZED */
 .card-hover {
-  transition: all 0.3s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
 }
 
 .card-hover:hover {
@@ -262,4 +263,33 @@ p {
 
 .animation-delay-600 {
   animation-delay: 600ms;
+}
+
+/* Performance optimizations */
+.animate-fade-up,
+.card-hover,
+[style*="transform"] {
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: 1000px;
+  -webkit-perspective: 1000px;
+}
+
+/* Reduce repaints for animations */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* GPU acceleration for transforms */
+.parallax-layer {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Optimize rendering for sections */
+section {
+  contain: layout style paint;
 }
