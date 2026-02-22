@@ -5,7 +5,7 @@ export const personalInfo = {
     email: "kadamraj623@gmail.com",
     phone: "(+91) 9321587317",
     location: "Mumbai, India",
-    resumeUrl: "https://docs.google.com/document/d/1NJi5Oatrqvo4BWS4Tv7nRJ5xcFpW3HleOF3nRDpWoqM/edit?usp=sharing",
+    resumeUrl: "https://docs.google.com/document/d/1jH3fsNqKOq2QOPiC-KtZ5Duo8gvhLvKUk21DYG4Nnmo/edit?usp=sharing",
 };
 
 export const socialLinks = {
@@ -69,6 +69,19 @@ export const projects = [
         featured: true,
     },
     {
+        id: 4,
+        title: "AI Resume Screening System",
+        description: "Intelligent resume screening platform powered by machine learning for automated candidate evaluation",
+        problem: "HR teams spent countless hours manually reviewing resumes, leading to inconsistent evaluations and missed qualified candidates",
+        solution: "Built an AI-powered screening system using Python, Flask, and machine learning algorithms to automatically analyze resumes, extract key information, and rank candidates based on job requirements",
+        impact: "Reduced resume screening time by 75%, processed 1000+ resumes with 85% accuracy in candidate matching, and improved hiring efficiency for multiple organizations",
+        techStack: ["Python", "Flask", "Machine Learning", "NLP", "MongoDB", "scikit-learn", "Angular"],
+        image: "/projects/ai-resume-screening.jpg",
+        liveUrl: "https://resume-screening-ai-ekqc.onrender.com",
+        githubUrl: "https://github.com/rajkadam16/Resume_Screening_AI",
+        featured: true,
+    },
+    {
         id: 2,
         title: "Code Snippet Manager",
         description: "Real-time collaborative platform for managing and sharing code snippets with 600+ registered users",
@@ -94,19 +107,7 @@ export const projects = [
         githubUrl: "https://github.com/rajkadam16/expense-tracker",
         featured: true,
     },
-    {
-        id: 4,
-        title: "AI Resume Screening System",
-        description: "Intelligent resume screening platform powered by machine learning for automated candidate evaluation",
-        problem: "HR teams spent countless hours manually reviewing resumes, leading to inconsistent evaluations and missed qualified candidates",
-        solution: "Built an AI-powered screening system using Python, Flask, and machine learning algorithms to automatically analyze resumes, extract key information, and rank candidates based on job requirements",
-        impact: "Reduced resume screening time by 75%, processed 1000+ resumes with 85% accuracy in candidate matching, and improved hiring efficiency for multiple organizations",
-        techStack: ["Python", "Flask", "Machine Learning", "NLP", "MongoDB", "scikit-learn", "Angular"],
-        image: "/projects/ai-resume-screening.jpg",
-        liveUrl: "https://ai-resume-screener.vercel.app",
-        githubUrl: "https://github.com/rajkadam16/Resume_Screening_AI",
-        featured: true,
-    },
+
     {
         id: 5,
         title: "CS Corners Website Management",
@@ -137,7 +138,7 @@ export const experience = [
         id: 1,
         company: "CS Corners",
         position: "Website Management & Content Administrator",
-        duration: "November 2024 - Present",
+        duration: "November 2025 - Present",
         location: "Remote (Intern / Freelance)",
         description: [
             "Managed and maintained a live WordPress-based educational website with 50+ pages, ensuring accurate content, consistency, and timely updates",
