@@ -5,7 +5,7 @@ export const personalInfo = {
     email: "kadamraj623@gmail.com",
     phone: "(+91) 9321587317",
     location: "Mumbai, India",
-    resumeUrl: "https://docs.google.com/document/d/1jH3fsNqKOq2QOPiC-KtZ5Duo8gvhLvKUk21DYG4Nnmo/edit?usp=sharing",
+    resumeUrl: "https://drive.google.com/file/d/12qTAC3hmlqmztNo2avb1gXzK28kbDaof/view?usp=sharing",
 };
 
 export const socialLinks = {
@@ -197,8 +197,8 @@ export const certifications = [
         id: 3,
         name: "Namaste DSA | Data Structures & Algorithms",
         issuer: "Namaste DSA",
-        date: "2024",
-        credentialUrl: "#",
+        date: "2026",
+        credentialUrl: "https://drive.google.com/file/d/1Eowp2lvWcgjwlSq7GqxXLxDxpoOOhuVU/view?usp=sharing",
         description: "Comprehensive coverage of Arrays, Linked Lists, Stacks, Queues, Trees, Recursion, Sorting, and Searching with problem-solving practice",
     },
 
@@ -208,7 +208,7 @@ export const certifications = [
         issuer: "LeetCode",
         date: "Ongoing",
         credentialUrl: "https://leetcode.com/u/rajkadam16",
-        description: "Solved 100+ DSA problems covering Arrays, Linked Lists, Stacks, Queues, Trees, Sorting, and Searching",
+        description: "Solved 130+ DSA problems covering Arrays, Linked Lists, Stacks, Queues, Trees, Sorting, and Searching",
     }
 ];
 
