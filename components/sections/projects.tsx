@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { ExternalLink, Github } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -8,12 +8,34 @@ import { Button } from "@/components/ui/button";
 import { Modal } from "@/components/ui/modal";
 import { projects } from "@/lib/constants";
 import { ParallaxBackground } from "@/components/ui/parallax-background";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export function Projects() {
     const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+    const container = useRef<HTMLElement>(null);
+    const cardsRef = useRef<HTMLDivElement[]>([]);
+
+    useGSAP(() => {
+        gsap.from(cardsRef.current, {
+            y: 100,
+            autoAlpha: 0,
+            duration: 0.8,
+            stagger: 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: container.current,
+                start: "top 80%",
+                toggleActions: "play none none reverse"
+            }
+        });
+    }, { scope: container });
 
     return (
-        <section id="projects" className="section-padding bg-secondary/20 relative overflow-hidden">
+        <section id="projects" ref={container} className="section-padding bg-secondary/20 relative overflow-hidden">
             {/* Parallax Background Decorations */}
             <ParallaxBackground />
 
@@ -25,63 +47,63 @@ export function Projects() {
 
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project, index) => (
-                        <Card
-                            key={project.id}
-                            className="cursor-pointer group animate-fade-up"
-                            style={{ animationDelay: `${index * 100}ms` }}
-                            onClick={() => setSelectedProject(project)}
-                        >
-                            <CardHeader>
-                                <CardTitle className="group-hover:text-primary transition-colors">
-                                    {project.title}
-                                </CardTitle>
-                                <CardDescription>{project.description}</CardDescription>
-                            </CardHeader>
+                        <div key={project.id} ref={(el) => { if (el) cardsRef.current[index] = el }}>
+                            <Card
+                                className="cursor-pointer group h-full transition-transform hover:-translate-y-2"
+                                onClick={() => setSelectedProject(project)}
+                            >
+                                <CardHeader>
+                                    <CardTitle className="group-hover:text-primary transition-colors">
+                                        {project.title}
+                                    </CardTitle>
+                                    <CardDescription>{project.description}</CardDescription>
+                                </CardHeader>
 
-                            <CardContent className="space-y-4">
-                                {/* Tech Stack */}
-                                <div className="flex flex-wrap gap-2">
-                                    {project.techStack.map((tech) => (
-                                        <span
-                                            key={tech}
-                                            className="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20"
-                                        >
-                                            {tech}
-                                        </span>
-                                    ))}
-                                </div>
+                                <CardContent className="space-y-4">
+                                    {/* Tech Stack */}
+                                    <div className="flex flex-wrap gap-2">
+                                        {project.techStack.map((tech) => (
+                                            <span
+                                                key={tech}
+                                                className="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20"
+                                            >
+                                                {tech}
+                                            </span>
+                                        ))}
+                                    </div>
 
-                                {/* Links */}
-                                <div className="flex gap-3 pt-2">
-                                    {project.liveUrl && (
-                                        <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                window.open(project.liveUrl, "_blank");
-                                            }}
-                                        >
-                                            <ExternalLink className="w-4 h-4 mr-2" />
-                                            Live Demo
-                                        </Button>
-                                    )}
-                                    {project.githubUrl && (
-                                        <Button
-                                            size="sm"
-                                            variant="ghost"
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                window.open(project.githubUrl, "_blank");
-                                            }}
-                                        >
-                                            <Github className="w-4 h-4 mr-2" />
-                                            Code
-                                        </Button>
-                                    )}
-                                </div>
-                            </CardContent>
-                        </Card>
+                                    {/* Links */}
+                                    <div className="flex gap-3 pt-2">
+                                        {project.liveUrl && (
+                                            <Button
+                                                size="sm"
+                                                variant="ghost"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    window.open(project.liveUrl, "_blank");
+                                                }}
+                                            >
+                                                <ExternalLink className="w-4 h-4 mr-2" />
+                                                Live Demo
+                                            </Button>
+                                        )}
+                                        {project.githubUrl && (
+                                            <Button
+                                                size="sm"
+                                                variant="ghost"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    window.open(project.githubUrl, "_blank");
+                                                }}
+                                            >
+                                                <Github className="w-4 h-4 mr-2" />
+                                                Code
+                                            </Button>
+                                        )}
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
                     ))}
                 </div>
             </div>

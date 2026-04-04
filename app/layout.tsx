@@ -39,6 +39,9 @@ export const metadata: Metadata = {
     title: "Raj Shankar Kadam | Full-Stack Developer",
     description: "Full-Stack Developer specializing in Java, Spring Boot, Angular, and modern web technologies",
   },
+  verification: {
+    google: "glOgJiE3J3QcRzKBjhV5Z8XePfAWuWisJvZgLzSL_KY",
+  },
 };
 
 export const viewport = {
