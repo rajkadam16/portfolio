@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Github, Linkedin, Code2, Send, Instagram, Twitter } from "lucide-react";
+import { Mail, Github, Linkedin, Code2, Send, Instagram, Twitter, CheckCircle } from "lucide-react";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { Button } from "@/components/ui/button";
 import { personalInfo, socialLinks } from "@/lib/constants";
+
+const FORMSPREE_ID = "xyzzyknq";
 
 export function Contact() {
     const [formData, setFormData] = useState({
@@ -12,12 +14,34 @@ export function Contact() {
         email: "",
         message: "",
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitSuccess, setSubmitSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // In a real application, you would send this to a backend API
-        const mailtoLink = `mailto:${personalInfo.email}?subject=Portfolio Contact from ${formData.name}&body=${formData.message}`;
-        window.location.href = mailtoLink;
+        setIsSubmitting(true);
+        setSubmitError("");
+
+        try {
+            const response = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                setSubmitSuccess(true);
+                setFormData({ name: "", email: "", message: "" });
+                setTimeout(() => setSubmitSuccess(false), 5000);
+            } else {
+                setSubmitError("Failed to send. Please try again.");
+            }
+        } catch (error) {
+            setSubmitError("Network error. Please check your connection.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -49,7 +73,7 @@ export function Contact() {
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
                                 <label htmlFor="name" className="block text-sm font-medium mb-2">
-                                    Name
+                                    Name <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="text"
@@ -58,14 +82,16 @@ export function Contact() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 rounded-lg glass focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                                    aria-required="true"
+                                    aria-label="Your full name"
+                                    className="w-full px-4 py-3 rounded-lg glass focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all"
                                     placeholder="Your name"
                                 />
                             </div>
 
                             <div>
                                 <label htmlFor="email" className="block text-sm font-medium mb-2">
-                                    Email
+                                    Email <span className="text-red-500">*</span>
                                 </label>
                                 <input
                                     type="email"
@@ -74,14 +100,16 @@ export function Contact() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 rounded-lg glass focus:ring-2 focus:ring-primary focus:outline-none transition-all"
+                                    aria-required="true"
+                                    aria-label="Your email address"
+                                    className="w-full px-4 py-3 rounded-lg glass focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all"
                                     placeholder="your.email@example.com"
                                 />
                             </div>
 
                             <div>
                                 <label htmlFor="message" className="block text-sm font-medium mb-2">
-                                    Message
+                                    Message <span className="text-red-500">*</span>
                                 </label>
                                 <textarea
                                     id="message"
@@ -89,15 +117,28 @@ export function Contact() {
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
+                                    aria-required="true"
+                                    aria-label="Your message"
                                     rows={5}
-                                    className="w-full px-4 py-3 rounded-lg glass focus:ring-2 focus:ring-primary focus:outline-none transition-all resize-none"
+                                    className="w-full px-4 py-3 rounded-lg glass focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none transition-all resize-none"
                                     placeholder="Your message..."
                                 />
                             </div>
 
-                            <Button type="submit" size="lg" className="w-full">
+                            {submitSuccess && (
+                                <div className="flex items-center gap-2 p-4 rounded-lg bg-green-500/10 text-green-600 border border-green-500/30">
+                                    <CheckCircle className="w-5 h-5" />
+                                    <span>Message sent successfully!</span>
+                                </div>
+                            )}
+                            {submitError && (
+                                <div className="p-4 rounded-lg bg-red-500/10 text-red-600 border border-red-500/30">
+                                    {submitError}
+                                </div>
+                            )}
+                            <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
                                 <Send className="w-5 h-5 mr-2" />
-                                Send Message
+                                {isSubmitting ? "Sending..." : "Send Message"}
                             </Button>
                         </form>
                     </div>

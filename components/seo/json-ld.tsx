@@ -3,7 +3,7 @@ export function JsonLd() {
         "@context": "https://schema.org",
         "@type": "Person",
         name: "Raj Shankar Kadam",
-        jobTitle: "Full-Stack Developer",
+        jobTitle: "Software Developer | Full-Stack Engineer",
         url: "https://rajkadam.dev",
         sameAs: [
             "https://github.com/rajkadam16",
@@ -28,14 +28,18 @@ export function JsonLd() {
             },
         ],
         knowsAbout: [
-            "Java",
-            "Spring Boot",
-            "Angular",
+            "PHP",
+            "Python",
             "JavaScript",
             "TypeScript",
+            "React",
+            "Angular",
+            "WordPress",
             "MongoDB",
             "Full-Stack Development",
             "Web Development",
+            "SEO Optimization",
+            "Machine Learning",
         ],
     };
 

@@ -13,19 +13,28 @@ import { Contact } from "@/components/sections/contact";
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
-      <ScrollProgress />
-      <Navbar />
-      <Hero />
-      <About />
-      <AnalyticsDashboard />
-      <Skills />
-      <Projects />
-      <Experience />
-      <Certifications />
-      <Contact />
-      <Footer />
-      <BackToTop />
-    </main>
+    <>
+      {/* Skip to main content link - keyboard accessible */}
+      <a 
+        href="#main-content" 
+        className="absolute -top-12 left-0 z-50 px-4 py-2 bg-primary text-primary-foreground rounded focus-visible:top-0 transition-all"
+      >
+        Skip to main content
+      </a>
+      <main id="main-content" className="min-h-screen">
+        <ScrollProgress />
+        <Navbar />
+        <Hero />
+        <About />
+        <AnalyticsDashboard />
+        <Skills />
+        <Projects />
+        <Experience />
+        <Certifications />
+        <Contact />
+        <Footer />
+        <BackToTop />
+      </main>
+    </>
   );
 }

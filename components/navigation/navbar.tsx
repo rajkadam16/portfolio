@@ -16,11 +16,18 @@ const navItems = [
 ];
 
 export function Navbar() {
+    const [mounted, setMounted] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [activeSection, setActiveSection] = useState("");
 
     useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    useEffect(() => {
+        if (!mounted) return;
+
         let rafId: number | undefined;
         let lastScrollY = 0;
 
@@ -57,7 +64,7 @@ export function Navbar() {
             window.removeEventListener("scroll", handleScroll);
             if (rafId) cancelAnimationFrame(rafId);
         };
-    }, []);
+    }, [mounted]);
 
     const scrollToSection = (href: string) => {
         const element = document.querySelector(href);

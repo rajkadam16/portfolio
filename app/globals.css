@@ -1,20 +1,24 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
   /* Light mode colors (default) */
-  --color-background: oklch(100% 0 0);
-  --color-foreground: oklch(9% 0.01 285);
-  --color-primary: oklch(65% 0.25 290);
-  --color-primary-foreground: oklch(100% 0 0);
-  --color-secondary: oklch(96% 0.01 285);
-  --color-secondary-foreground: oklch(15% 0.01 285);
-  --color-accent: oklch(55% 0.20 160);
-  --color-accent-foreground: oklch(100% 0 0);
-  --color-muted: oklch(96% 0.01 285);
-  --color-muted-foreground: oklch(55% 0.01 285);
-  --color-card: oklch(100% 0 0);
-  --color-card-foreground: oklch(9% 0.01 285);
-  --color-border: oklch(90% 0.01 285);
+  --color-background: #f8cfb4;
+  --color-foreground: #1f4e79;
+  --color-primary: #1f4e79;
+  --color-primary-foreground: #f8cfb4;
+  --color-secondary: #cee1f2;
+  --color-secondary-foreground: #1f4e79;
+  --color-accent: #c55a11;
+  --color-accent-foreground: #f8cfb4;
+  --color-muted: #cccccc;
+  --color-muted-foreground: #1f4e79;
+  --color-card: #f8cfb4;
+  --color-card-foreground: #1f4e79;
+  --color-border: #cccccc;
 
   /* Animations */
   --animate-fade-in: fade-in 0.5s ease-in;
@@ -81,33 +85,38 @@
 /* Dark mode - use media query outside @theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-background: oklch(9% 0.01 285);
-    --color-foreground: oklch(98% 0 0);
-    --color-card: oklch(12% 0.01 285);
-    --color-card-foreground: oklch(98% 0 0);
-    --color-secondary: oklch(18% 0.01 285);
-    --color-secondary-foreground: oklch(98% 0 0);
-    --color-muted: oklch(18% 0.01 285);
-    --color-muted-foreground: oklch(65% 0.01 285);
-    --color-border: oklch(18% 0.01 285);
+    /* Dark mode using custom palette - inverted for better contrast */
+    --color-background: #0f1419;
+    --color-foreground: #e8f0f8;
+    --color-primary: #4a9eff;
+    --color-primary-foreground: #0f1419;
+    --color-secondary: #1a3a52;
+    --color-secondary-foreground: #e8f0f8;
+    --color-accent: #ff8c42;
+    --color-accent-foreground: #0f1419;
+    --color-muted: #5a6a7a;
+    --color-muted-foreground: #b8c8d8;
+    --color-card: #1a2530;
+    --color-card-foreground: #e8f0f8;
+    --color-border: #3a4a5a;
   }
 }
 
 /* Dark mode class override */
 .dark {
-  --color-background: oklch(9% 0.01 285);
-  --color-foreground: oklch(98% 0 0);
-  --color-card: oklch(12% 0.01 285);
-  --color-card-foreground: oklch(98% 0 0);
-  --color-primary: oklch(65% 0.25 290);
-  --color-primary-foreground: oklch(100% 0 0);
-  --color-secondary: oklch(18% 0.01 285);
-  --color-secondary-foreground: oklch(98% 0 0);
-  --color-accent: oklch(55% 0.20 160);
-  --color-accent-foreground: oklch(100% 0 0);
-  --color-muted: oklch(18% 0.01 285);
-  --color-muted-foreground: oklch(65% 0.01 285);
-  --color-border: oklch(18% 0.01 285);
+  --color-background: #0f1419;
+  --color-foreground: #e8f0f8;
+  --color-card: #1a2530;
+  --color-card-foreground: #e8f0f8;
+  --color-primary: #4a9eff;
+  --color-primary-foreground: #0f1419;
+  --color-secondary: #1a3a52;
+  --color-secondary-foreground: #e8f0f8;
+  --color-accent: #ff8c42;
+  --color-accent-foreground: #0f1419;
+  --color-muted: #5a6a7a;
+  --color-muted-foreground: #b8c8d8;
+  --color-border: #3a4a5a;
 }
 
 /* Base styles */

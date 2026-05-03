@@ -1,11 +1,11 @@
 export const personalInfo = {
     name: "Raj Shankar Kadam",
-    role: "Full-Stack Developer",
-    tagline: "Building scalable web applications with Java, Spring Boot & Angular",
+    role: "Software Developer | Full-Stack Engineer",
+    tagline: "Building scalable web applications with React, Angular, Java & WordPress",
     email: "kadamraj623@gmail.com",
     phone: "(+91) 9321587317",
     location: "Mumbai, India",
-    resumeUrl: "https://drive.google.com/file/d/12qTAC3hmlqmztNo2avb1gXzK28kbDaof/view?usp=sharing",
+    resumeUrl: "https://drive.google.com/file/d/1Kktj73P7YiXf9454lpJxUjAH-sTIH9I8/view",
 };
 
 export const socialLinks = {
@@ -17,40 +17,42 @@ export const socialLinks = {
 };
 
 export const about = {
-    shortBio: "Passionate Full-Stack Developer with expertise in building enterprise-grade applications using Java, Spring Boot, and modern frontend frameworks. Currently pursuing Master's in Computer Science while gaining hands-on experience in web development and content management. I love solving complex problems and creating seamless user experiences.",
+    shortBio: "Software Developer with expertise in building responsive web applications and WordPress solutions. Currently pursuing Master's in Computer Science while working full-time at ALFA KOP. I specialize in PHP, JavaScript, TypeScript, and modern web technologies, with a strong focus on performance optimization, SEO implementation, and creating scalable solutions.",
     journey: [
-        "Achieved academic excellence with 9.20/10 GPA and secured 1st position in 3rd year, 5th semester",
-        "Developed full-stack Property Rental System managing 200+ properties and 500+ users",
-        "Currently managing live WordPress website with 50+ pages at CS Corners",
-        "Solved 100+ DSA problems on LeetCode, strengthening algorithmic thinking",
-        "Won 1st place in college-level web development competition",
+        "Currently working as Software Developer at ALFA KOP, developing WordPress themes and plugins for 5+ web properties",
+        "Architected responsive mobile-first layouts and enhanced website performance by 25% through optimization techniques",
+        "Deployed ML-powered resume screener with 85%+ accuracy on Render with MongoDB Atlas",
+        "Published 20+ SEO-optimized technical blogs with keyword targeting and schema markup implementation",
+        "Achieved GPA 9.20/10 and secured 1st Rank (Semester Topper) in Third Year at Mumbai University",
+        "Solved 130+ DSA problems on LeetCode covering Arrays, Linked Lists, Stacks, Queues, and Trees",
     ],
 };
 
 export const skills = {
     frontend: [
-        { name: "Angular (v16)", level: 90 },
-        { name: "JavaScript", level: 88 },
-        { name: "TypeScript", level: 85 },
+        { name: "JavaScript", level: 90 },
+        { name: "TypeScript", level: 88 },
+        { name: "React JS", level: 85 },
+        { name: "Angular", level: 85 },
         { name: "HTML/CSS", level: 95 },
-        { name: "Bootstrap", level: 85 },
-        { name: "Tailwind CSS", level: 82 },
+        { name: "Bootstrap", level: 88 },
+        { name: "Tailwind CSS", level: 87 },
     ],
     backend: [
-        { name: "Java", level: 92 },
-        { name: "Spring Boot", level: 90 },
-        { name: "Python", level: 75 },
+        { name: "PHP", level: 88 },
+        { name: "Python", level: 82 },
+        { name: "Java", level: 85 },
+        { name: "Spring Boot", level: 82 },
         { name: "REST APIs", level: 88 },
         { name: "JWT Authentication", level: 85 },
-        { name: "Microservices", level: 78 },
     ],
     tools: [
-        { name: "MongoDB", level: 88 },
-        { name: "Firebase", level: 80 },
-        { name: "Redis", level: 75 },
+        { name: "WordPress", level: 90 },
+        { name: "MongoDB", level: 85 },
+        { name: "MySQL/SQL", level: 85 },
         { name: "Git & GitHub", level: 90 },
-        { name: "Docker", level: 70 },
-        { name: "Postman", level: 85 },
+        { name: "Postman", level: 88 },
+        { name: "Docker", level: 75 },
     ],
 };
 
@@ -71,11 +73,11 @@ export const projects = [
     {
         id: 4,
         title: "AI Resume Screening System",
-        description: "Intelligent resume screening platform powered by machine learning for automated candidate evaluation",
+        description: "ML-powered resume screening platform that automatically evaluates and ranks candidates against job descriptions",
         problem: "HR teams spent countless hours manually reviewing resumes, leading to inconsistent evaluations and missed qualified candidates",
-        solution: "Built an AI-powered screening system using Python, Flask, and machine learning algorithms to automatically analyze resumes, extract key information, and rank candidates based on job requirements",
-        impact: "Reduced resume screening time by 75%, processed 1000+ resumes with 85% accuracy in candidate matching, and improved hiring efficiency for multiple organizations",
-        techStack: ["Python", "Flask", "Machine Learning", "NLP", "MongoDB", "scikit-learn", "Angular"],
+        solution: "Built an AI-powered screening system using Python, Flask, XGBoost, and NLP to automatically analyze resumes, extract 20+ features, and rank candidates with fuzzy skill matching and TF-IDF vectorization",
+        impact: "Reduced resume screening time by 60%, achieved 85%+ accuracy in candidate matching, deployed on Render with MongoDB Atlas and optimized with pre-compiled regex and Gunicorn multi-worker configuration",
+        techStack: ["Python", "Flask", "XGBoost", "NLP", "TF-IDF", "MongoDB", "Machine Learning", "Render"],
         image: "/projects/ai-resume-screening.jpg",
         liveUrl: "https://resume-screening-ai-ekqc.onrender.com",
         githubUrl: "https://github.com/rajkadam16/Resume_Screening_AI",
@@ -136,17 +138,45 @@ export const projects = [
 export const experience = [
     {
         id: 1,
-        company: "CS Corners",
-        position: "Website Management & Content Administrator",
-        duration: "November 2025 - Present",
-        location: "Remote (Intern / Freelance)",
+        company: "ALFA KOP Pvt Ltd",
+        position: "Software Developer",
+        duration: "April 2026 - Present",
+        location: "Mumbai, India",
         description: [
-            "Managed and maintained a live WordPress-based educational website with 50+ pages, ensuring accurate content, consistency, and timely updates",
-            "Handled data entry and content management for 10+ courses, executing 30+ content and layout updates to improve website structure and readability",
-            "Optimized and uploaded 25+ media assets, applying proper formatting, compression, and alignment to enhance visual quality and performance",
-            "Applied SEO-friendly content practices (structured headings, clean layouts, internal linking) and collaborated directly with the website owner",
+            "Developed and customized WordPress themes and plugins using PHP, HTML, and CSS to meet specific business requirements",
+            "Architected responsive, mobile-first layouts for 5+ web properties and enhanced website performance by 25% through media compression and lazy loading",
+            "Applied on-page SEO best practices including structured data markup and metadata configuration",
+            "Collaborated with cross-functional teams to deliver scalable, maintainable web solutions",
         ],
-        technologies: ["WordPress", "CMS Management", "Content Editing", "SEO", "Image Optimization"],
+        technologies: ["WordPress", "PHP", "HTML/CSS", "SEO", "Plugin Development", "Performance Optimization"],
+    },
+    {
+        id: 2,
+        company: "VrikshaMitra Foundation",
+        position: "WordPress Developer",
+        duration: "January 2026 - March 2026",
+        location: "Mumbai, India - Remote",
+        description: [
+            "Customized 10+ WordPress pages using Elementor with custom CSS overrides, strengthening UI consistency",
+            "Reduced average navigation depth by 2 clicks for improved user flow",
+            "Refactored media assets and page structure, reducing average page load time by 30%",
+            "Improved Lighthouse performance scores significantly",
+        ],
+        technologies: ["WordPress", "Elementor", "CSS", "Performance Optimization", "UI Design"],
+    },
+    {
+        id: 3,
+        company: "CS Corners",
+        position: "Web Developer",
+        duration: "November 2025 - Present",
+        location: "Mumbai, India - Remote",
+        description: [
+            "Developed and managed a 10+ page WordPress educational platform, executing 30+ layout and content updates",
+            "Published 20+ SEO-optimized technical blogs with keyword targeting, meta descriptions, and internal linking",
+            "Compressed 25+ media assets, implemented Schema.org structured data markup",
+            "Enhanced page architecture, improving Core Web Vitals scores and search engine crawlability",
+        ],
+        technologies: ["WordPress", "SEO", "Content Management", "Schema Markup", "Image Optimization"],
     },
 ];
 
@@ -167,10 +197,10 @@ export const education = [
         institution: "Mumbai University",
         degree: "Bachelor of Science in Information Technology",
         duration: "June 2023 - March 2025",
-        grade: "7.90/10 CGPA",
+        grade: "7.80/10 CGPA",
         achievements: [
-            "Achieved GPA of 9.20/10 in final year, demonstrating consistent academic excellence",
-            "Secured 1st position in 3rd year, 5th semester",
+            "Achieved GPA of 9.20/10 in the third year, fifth semester (Semester Topper)",
+            "Secured 1st position in 3rd year, 5th semester among all peers",
             "Won 1st place in college-level web development competition (February 2023)",
         ],
     },
@@ -209,7 +239,7 @@ export const certifications = [
         date: "Ongoing",
         credentialUrl: "https://leetcode.com/u/rajkadam16",
         description: "Solved 130+ DSA problems covering Arrays, Linked Lists, Stacks, Queues, Trees, Sorting, and Searching",
-    }
+    },
 ];
 
 export const coreCompetencies = [
@@ -254,7 +284,7 @@ export const achievements = [
         id: 4,
         title: "Data Structures & Algorithms Practice | LeetCode",
         date: "Ongoing",
-        description: "Solved 100+ DSA problems on LeetCode, covering Arrays, Linked Lists, Stacks, Queues, Trees, Sorting, and Searching, strengthening problem-solving and algorithmic thinking skills",
+        description: "Solved 130+ DSA problems on LeetCode, covering Arrays, Linked Lists, Stacks, Queues, Trees, Sorting, and Searching, strengthening problem-solving and algorithmic thinking skills",
     },
 ];
 

@@ -5,7 +5,6 @@ import { Download, ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TypingAnimation } from "@/components/ui/typing-animation";
 import { personalInfo } from "@/lib/constants";
-import { ParticleBackground } from "@/components/three/particle-background";
 import { useParallax } from "@/hooks/use-parallax";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -58,16 +57,11 @@ export function Hero() {
     };
 
     return (
-        <section ref={container} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-            {/* 3D Background with Parallax */}
-            <div
-                className="absolute inset-0 parallax-layer"
-                style={{
-                    transform: `translate3d(0, ${backgroundOffset}px, 0)`,
-                }}
-            >
-                <ParticleBackground />
-            </div>
+        <section ref={container} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-secondary/30 to-background">
+            {/* Animated Background Orbs */}
+            <div className="absolute top-20 -left-40 w-80 h-80 rounded-full bg-accent/20 blur-3xl animate-float opacity-50" style={{ animationDelay: '0s' }} />
+            <div className="absolute bottom-20 -right-40 w-96 h-96 rounded-full bg-primary/10 blur-3xl animate-float opacity-40" style={{ animationDelay: '2s' }} />
+            <div className="absolute top-1/2 left-1/4 w-72 h-72 rounded-full bg-secondary/20 blur-3xl animate-pulse opacity-30" />
 
             {/* Content with Parallax */}
             <div
@@ -78,12 +72,12 @@ export function Hero() {
             >
                 <div className="max-w-4xl mx-auto text-center space-y-8">
                     {/* Name */}
-                    <h1 className="hero-title text-5xl md:text-7xl lg:text-8xl font-bold">
+                    <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold">
                         <span className="gradient-text">{personalInfo.name}</span>
                     </h1>
 
                     {/* Role */}
-                    <p className="hero-role text-2xl md:text-3xl lg:text-4xl text-muted-foreground">
+                    <p className="hero-role text-xl sm:text-2xl md:text-3xl lg:text-4xl text-muted-foreground">
                         {personalInfo.role}
                     </p>
 

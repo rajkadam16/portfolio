@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /.next/
+
+# Sitemap
+Sitemap: https://rajkadam.com/sitemap.xml
+
+# Crawl delay (seconds)
+Crawl-delay: 1
