@@ -1,109 +1,120 @@
 "use client";
 
-import { SectionHeading } from "@/components/ui/section-heading";
-import { experience, education } from "@/lib/constants";
-import { Briefcase, GraduationCap } from "lucide-react";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { experience } from "@/data/resume";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function Experience() {
-    return (
-        <section id="experience" className="section-padding">
-            <div className="container-custom">
-                <SectionHeading
-                    title="Experience & Education"
-                    subtitle="My professional journey"
-                />
+  const sectionRef = useRef<HTMLElement>(null);
 
-                <div className="grid lg:grid-cols-2 gap-12">
-                    {/* Experience Timeline */}
-                    <div>
-                        <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                            <Briefcase className="w-6 h-6 text-primary" />
-                            Work Experience
-                        </h3>
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced || !sectionRef.current) return;
 
-                        <div className="space-y-8 relative before:absolute before:left-0 before:top-0 before:bottom-0 before:w-0.5 before:bg-border">
-                            {experience.map((exp, index) => (
-                                <div
-                                    key={exp.id}
-                                    className="relative pl-8 animate-fade-up"
-                                    style={{ animationDelay: `${index * 100}ms` }}
-                                >
-                                    {/* Timeline dot */}
-                                    <div className="absolute left-0 top-0 w-4 h-4 rounded-full bg-primary -translate-x-[7px] ring-4 ring-background" />
+    const ctx = gsap.context(() => {
+      gsap.from(".exp-row", {
+        y: 40,
+        opacity: 0,
+        stagger: 0.14,
+        duration: 0.9,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+    }, sectionRef);
 
-                                    <div className="glass p-6 rounded-lg">
-                                        <h4 className="text-xl font-semibold mb-1">{exp.position}</h4>
-                                        <p className="text-primary font-medium mb-2">{exp.company}</p>
-                                        <p className="text-sm text-muted-foreground mb-4">
-                                            {exp.duration} • {exp.location}
-                                        </p>
+    return () => ctx.revert();
+  }, []);
 
-                                        <ul className="space-y-2 mb-4">
-                                            {exp.description.map((item, i) => (
-                                                <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                                                    <span className="text-primary mt-1">▹</span>
-                                                    <span>{item}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
+  return (
+    <section ref={sectionRef} id="experience" className="section-pad">
+      <div className="container-xl">
+        <div className="flex items-center gap-4 mb-12">
+          <span className="text-mono-sm" style={{ color: "var(--color-muted)" }}>
+            005
+          </span>
+          <div className="hairline flex-1" />
+          <span className="text-mono-sm" style={{ color: "var(--color-muted)" }}>
+            EXPERIENCE
+          </span>
+        </div>
 
-                                        <div className="flex flex-wrap gap-2">
-                                            {exp.technologies.map((tech) => (
-                                                <span
-                                                    key={tech}
-                                                    className="px-2 py-1 text-xs rounded bg-secondary text-foreground"
-                                                >
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+        <div className="overflow-hidden">
+          {experience.map((exp) => (
+            <div
+              key={exp.id}
+              className="exp-row group relative"
+              style={{ borderBottom: "1px solid var(--color-border)" }}
+            >
+              {/* Hover accent line drawing across */}
+              <div
+                className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500 ease-out pointer-events-none"
+                style={{ backgroundColor: "var(--color-accent)" }}
+              />
 
-                    {/* Education Timeline */}
-                    <div>
-                        <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
-                            <GraduationCap className="w-6 h-6 text-primary" />
-                            Education
-                        </h3>
-
-                        <div className="space-y-8 relative before:absolute before:left-0 before:top-0 before:bottom-0 before:w-0.5 before:bg-border">
-                            {education.map((edu, index) => (
-                                <div
-                                    key={edu.id}
-                                    className="relative pl-8 animate-fade-up"
-                                    style={{ animationDelay: `${index * 100}ms` }}
-                                >
-                                    {/* Timeline dot */}
-                                    <div className="absolute left-0 top-0 w-4 h-4 rounded-full bg-accent -translate-x-[7px] ring-4 ring-background" />
-
-                                    <div className="glass p-6 rounded-lg">
-                                        <h4 className="text-xl font-semibold mb-1">{edu.degree}</h4>
-                                        <p className="text-accent font-medium mb-2">{edu.institution}</p>
-                                        <p className="text-sm text-muted-foreground mb-4">
-                                            {edu.duration} • {edu.grade}
-                                        </p>
-
-                                        {edu.achievements && (
-                                            <ul className="space-y-2">
-                                                {edu.achievements.map((achievement, i) => (
-                                                    <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-                                                        <span className="text-accent mt-1">▹</span>
-                                                        <span>{achievement}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+              <div className="py-8 md:py-10 transition-transform duration-300 ease-out group-hover:translate-x-2 md:group-hover:translate-x-4">
+                <div className="flex flex-col md:flex-row md:items-baseline gap-2 md:gap-8 mb-4">
+                  <span
+                    className="text-mono-sm flex-shrink-0"
+                    style={{ color: "var(--color-muted)", minWidth: "180px" }}
+                  >
+                    {exp.duration}
+                  </span>
+                  <div>
+                    <h3
+                      className="text-xl md:text-2xl font-semibold mb-1 group-hover:text-[var(--color-accent)] transition-colors"
+                      style={{ fontFamily: "var(--font-display)", color: "var(--color-fg)" }}
+                    >
+                      {exp.position}
+                    </h3>
+                    <span className="text-mono" style={{ color: "var(--color-muted)" }}>
+                      {exp.company} — {exp.location}
+                    </span>
+                  </div>
                 </div>
+
+                <ul className="space-y-2 md:pl-[212px]">
+                  {exp.description.map((item, j) => (
+                    <li
+                      key={j}
+                      className="flex items-start gap-3 text-sm"
+                      style={{ color: "var(--color-muted)" }}
+                    >
+                      <span
+                        style={{ color: "var(--color-accent)", marginTop: "0.25rem", flexShrink: 0 }}
+                      >
+                        ▹
+                      </span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="flex flex-wrap gap-2 mt-4 md:pl-[212px]">
+                  {exp.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-mono-sm px-3 py-1 rounded-full"
+                      style={{
+                        border: "1px solid var(--color-border)",
+                        color: "var(--color-muted)",
+                      }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }

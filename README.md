@@ -1,188 +1,139 @@
-# Portfolio Website
+# Raj Kadam — Portfolio Website
 
-A world-class, premium portfolio website for a Full-Stack Developer built with Next.js 14, Three.js, and Tailwind CSS.
-
-## 🚀 Features
-
-- **3D Interactive Hero Section** - Particle background with floating geometric shapes using Three.js
-- **Dark/Light Theme** - Seamless theme switching with localStorage persistence
-- **Glassmorphism Design** - Modern UI with glass effects and neon accents
-- **Smooth Animations** - GSAP and Framer Motion powered animations
-- **Fully Responsive** - Mobile-first design that works on all devices
-- **SEO Optimized** - Meta tags, OpenGraph, and semantic HTML
-- **Accessible** - WCAG-compliant with keyboard navigation
-- **Performance Optimized** - Lazy loading, code splitting, and optimized assets
-
-## 📋 Sections
-
-- **Hero** - Eye-catching 3D background with name, tagline, and CTAs
-- **About** - Developer journey and tech stack overview
-- **Skills** - Categorized skills with animated progress bars
-- **Projects** - Interactive project cards with modal detail views
-- **Experience** - Timeline-based work history
-- **Education** - Academic background
-- **Certifications** - Professional credentials
-- **Contact** - Animated contact form and social links
-
-## 🛠 Tech Stack
-
-- **Framework:** Next.js 14 (App Router)
-- **Language:** TypeScript
-- **Styling:** Tailwind CSS
-- **3D Graphics:** Three.js, React Three Fiber
-- **Animations:** Framer Motion, GSAP
-- **Icons:** Lucide React
-- **Deployment:** Vercel (recommended)
-
-## 📦 Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd portfolio
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Run development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## 🎨 Customization
-
-### Update Your Information
-
-Edit `lib/constants.ts` to customize all content:
-
-```typescript
-export const personalInfo = {
-  name: "Your Name",
-  role: "Your Role",
-  tagline: "Your tagline",
-  email: "your.email@example.com",
-  // ... more fields
-};
-```
-
-### Update Projects
-
-Add your real projects in `lib/constants.ts`:
-
-```typescript
-export const projects = [
-  {
-    title: "Your Project",
-    description: "Project description",
-    problem: "What problem it solves",
-    solution: "How you solved it",
-    impact: "The results/impact",
-    techStack: ["Tech1", "Tech2"],
-    liveUrl: "https://...",
-    githubUrl: "https://...",
-  },
-];
-```
-
-### Add Your Resume
-
-Place your resume PDF in the `public` folder and update the path in `lib/constants.ts`:
-
-```typescript
-resumeUrl: "/your-resume.pdf",
-```
-
-### Customize Colors
-
-Modify the color scheme in `app/globals.css`:
-
-```css
-:root {
-  --primary: 262 83% 58%; /* Purple */
-  --accent: 142 76% 36%; /* Green */
-  /* ... other colors */
-}
-```
-
-## 🚀 Deployment
-
-### Deploy to Vercel (Recommended)
-
-1. Push your code to GitHub
-2. Import your repository on [Vercel](https://vercel.com)
-3. Vercel will automatically detect Next.js and deploy
-
-### Deploy to Netlify
-
-1. Build the project:
-   ```bash
-   npm run build
-   ```
-
-2. Deploy the `.next` folder to Netlify
-
-### Environment Variables
-
-No environment variables are required for basic functionality. If you add email integration or analytics, create a `.env.local` file:
-
-```env
-NEXT_PUBLIC_ANALYTICS_ID=your_id
-```
-
-## 📊 Performance Optimization
-
-- **Images:** Use Next.js Image component for automatic optimization
-- **Fonts:** Self-hosted Google Fonts for better performance
-- **Code Splitting:** Automatic with Next.js App Router
-- **Lazy Loading:** Three.js components load on demand
-- **Bundle Size:** Optimized with tree-shaking
-
-## ♿ Accessibility
-
-- Semantic HTML elements
-- ARIA labels on interactive elements
-- Keyboard navigation support
-- Focus indicators
-- Color contrast ratios meet WCAG AA standards
-- Screen reader friendly
-
-## 📱 Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## 🧪 Testing
-
-Run Lighthouse audit:
-```bash
-npm run build
-npm start
-# Open Chrome DevTools > Lighthouse
-```
-
-Target scores: 90+ on all metrics
-
-## 📝 License
-
-MIT License - feel free to use this template for your own portfolio!
-
-## 🤝 Contributing
-
-This is a personal portfolio template. Feel free to fork and customize for your own use.
-
-## 📧 Contact
-
-For questions or feedback, reach out via the contact form on the website.
+A premium, editorial-style single-page portfolio engineered with Next.js, Tailwind CSS, Lenis, GSAP, and SplitType. Designed with inspiration from editorial typography and high-end creative studios.
 
 ---
 
-**Built with ❤️ using Next.js, Three.js, and Tailwind CSS**
+## 🛠 Tech Stack
+
+- **Framework**: Next.js (App Router) + React 19 + TypeScript
+- **Styling**: Tailwind CSS v4 (Custom dark editorial theme)
+- **Smooth Scroll**: Lenis (synced to GSAP ticker via `requestAnimationFrame`)
+- **Animations**: GSAP + ScrollTrigger for pinned sections, counters, parallax, and text line/word reveals
+- **Typography Split**: SplitType for line-by-line and char-by-char reveals
+- **Fonts**: Space Grotesk (display headlines) + JetBrains Mono (labels & micro-typography) self-hosted via Fontsource
+- **Icons**: Lucide React
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+Node.js 18+ and npm installed.
+
+### Installation & Run
+
+```bash
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser.
+
+To create an optimized production build:
+
+```bash
+npm run build
+npm start
+```
+
+---
+
+## ✏️ How to Edit Content
+
+All personal data, projects, experience, education, and links are centralized in a single file:
+
+📁 **`data/resume.ts`**
+
+You do **not** need to modify components to update your information. Simply edit:
+
+1. **Personal Information**:
+   - `name`, `fullName`, `role`, `tagline`, `location`, `timezone`, `email`, `resumeUrl`, `availability`
+2. **About Statement**:
+   - `statement`: Text used for the scroll-driven opacity scrub
+   - `quickFacts`: Key-value pairs displayed below the statement
+3. **Performance Snapshot / Stats**:
+   - `stats`: Numbers and labels for animated count-ups
+4. **Skills & Capabilities**:
+   - `skills.categories`: Accordion categories `{01}`, `{02}`, `{03}` and tag lists
+   - `skills.all`: Technology names animated in the continuous marquee
+5. **Work Experience**:
+   - `experience`: Company name, role, dates, location, achievements, and technology chips
+6. **Selected Projects**:
+   - `projects`: Title, description, measurable impact, tech stack, live demo & GitHub URLs, year
+7. **Education & Certifications**:
+   - `education`: Degrees, institutions, duration, CGPA/grades
+   - `certifications`: Name, issuer, date, credential link
+
+---
+
+## 🎨 Changing Colors & Typography
+
+All design tokens are defined in **`app/globals.css`** inside `@theme` and CSS variables:
+
+### Color Palette
+
+```css
+@theme {
+  --color-bg: #0B0B0C;       /* Editorial dark background */
+  --color-fg: #EDEDED;       /* High-contrast off-white text */
+  --color-muted: #666666;    /* Micro-labels and descriptions */
+  --color-accent: #C6FF3D;   /* Vibrant electric lime accent */
+  --color-border: #1E1E1E;   /* 1px hairline dividers */
+  --color-card: #111112;     /* Cards & preview backgrounds */
+}
+```
+
+To switch to a warm orange accent instead of lime:
+```css
+--color-accent: #FF6B35;
+```
+
+### Fonts
+
+Self-hosted fonts are imported directly in `app/layout.tsx` via `@fontsource/space-grotesk` and `@fontsource/jetbrains-mono` for optimal performance and zero external font network roundtrips. To change fonts, install another `@fontsource/*` package, import it in `app/layout.tsx`, and update `--font-display`, `--font-body`, and `--font-mono` in `app/globals.css`.
+
+---
+
+## 🚢 Deployment
+
+### Deploy to Vercel (Recommended)
+1. Push your repository to GitHub.
+2. Go to [vercel.com/new](https://vercel.com/new) and import the repository.
+3. Framework Preset: **Next.js**.
+4. Click **Deploy**. No special build settings or environment variables required.
+
+### Deploy to Netlify
+1. Connect your repository on [netlify.com](https://www.netlify.com).
+2. Build command: `npm run build`
+3. Publish directory: `.next`
+4. Use the Netlify Next.js Runtime plugin (detected automatically).
+
+---
+
+## 🔄 Summary of Changes vs Old UI
+
+| Feature | Old Portfolio | New Editorial Rebuild |
+| :--- | :--- | :--- |
+| **Aesthetic** | Generic light/dark gradients, neon glows, glassmorphism | Editorial, typographic-first monochrome with electric lime accent, 12-col grid, and hairline dividers |
+| **Typography** | Poppins & Inter | Space Grotesk (clamp fluid type up to 14vw) + JetBrains Mono micro-labels (`IDX/RK`, `MOD — 01`) |
+| **Scrolling** | Native browser smooth scroll | Lenis smooth scroll synced with GSAP ticker |
+| **Page Intro** | Immediate render | Polished 0–100 typographic preloader with skippable clip-path exit |
+| **Header** | Static floating navbar | Smart auto-hiding header (hides on scroll down, reveals on scroll up), live IST local time chip, and mobile overlay |
+| **Text Reveals** | CSS keyframe fade-in | SplitType + GSAP text mask reveals (`y: 100% -> 0`) |
+| **About Section** | Static paragraphs | Word-by-word scroll scrub reveal (opacity scrub as you scroll down) |
+| **Skills** | Static grid & marquee | Numbered expandable accordion (`{01}`, `{02}`, `{03}`) + infinite GSAP marquee |
+| **Projects** | Swiper slide carousel | Horizontal scroll-pinned gallery on desktop, stacked on mobile, custom "View" bubble cursor |
+| **Cursor** | Native pointer | Custom dot + lerped ring follower + magnetic interactive states |
+| **Contact** | Formspree input form | Bold typographic headline, one-click email copy with toast, and magnetic CTA |
+| **Reduced Motion** | Unhandled | Fully supported via `prefers-reduced-motion` media queries |
+
+---
+
+## 💡 Recommended Follow-ups
+1. **Custom Project Mockup Images**: Replace the numbered placeholder cards with 16:9 WebP screenshots of your live applications.
+2. **Personal Headshot / Portrait**: Add a monochrome portrait photograph in the About section with a slow GSAP parallax scroll scrub.
+3. **Analytics**: Add privacy-friendly analytics such as Vercel Analytics or Cloudflare Web Analytics.

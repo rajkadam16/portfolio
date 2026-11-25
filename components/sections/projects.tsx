@@ -1,255 +1,250 @@
 "use client";
 
-import { useState, useRef } from "react";
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
-import { SectionHeading } from "@/components/ui/section-heading";
-import { Button } from "@/components/ui/button";
-import { Modal } from "@/components/ui/modal";
-import { projects } from "@/lib/constants";
-import { ParallaxBackground } from "@/components/ui/parallax-background";
+import { useRef, useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+import { projects } from "@/data/resume";
 
-gsap.registerPlugin(ScrollTrigger, useGSAP);
+gsap.registerPlugin(ScrollTrigger);
 
 export function Projects() {
-    const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
-    const container = useRef<HTMLElement>(null);
-    const swiperRef = useRef<any>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const trackWrapperRef = useRef<HTMLDivElement>(null);
+  const galleryRef = useRef<HTMLDivElement>(null);
 
-    useGSAP(() => {
-        gsap.from(container.current, {
-            y: 50,
-            autoAlpha: 0,
-            duration: 0.8,
-            ease: "power3.out",
+  useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReduced || !galleryRef.current || !sectionRef.current || !trackWrapperRef.current) {
+      return;
+    }
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(min-width: 768px)", () => {
+      const gallery = galleryRef.current!;
+      const wrapper = trackWrapperRef.current!;
+      const getScrollAmount = () => Math.max(0, gallery.scrollWidth - wrapper.clientWidth);
+
+      gsap.to(gallery, {
+        x: () => -getScrollAmount(),
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: () => `+=${getScrollAmount()}`,
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+
+    const ctx = gsap.context(() => {
+      gsap.from(".project-card", {
+        y: 50,
+        opacity: 0,
+        stagger: 0.12,
+        duration: 0.9,
+        ease: "power4.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+          once: true,
+        },
+      });
+
+      // Clip-path + scale 1.15 -> 1 media reveal
+      gsap.utils.toArray<HTMLElement>(".project-media-reveal").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { clipPath: "inset(100% 0 0 0)", scale: 1.15 },
+          {
+            clipPath: "inset(0% 0 0 0)",
+            scale: 1,
+            duration: 1.1,
+            ease: "power3.inOut",
             scrollTrigger: {
-                trigger: container.current,
-                start: "top 80%",
-                toggleActions: "play none none reverse"
-            }
-        });
-    }, { scope: container });
+              trigger: el,
+              start: "top 85%",
+              once: true,
+            },
+          }
+        );
+      });
+    }, sectionRef);
 
-    return (
-        <section id="projects" ref={container} className="section-padding bg-secondary/20 relative overflow-hidden">
-            {/* Parallax Background Decorations */}
-            <ParallaxBackground />
+    return () => {
+      mm.revert();
+      ctx.revert();
+    };
+  }, []);
 
-            <div className="container-custom relative z-10">
-                <SectionHeading
-                    title="Featured Projects"
-                    subtitle="Swipe through my best work"
-                />
+  const featured = projects.filter((p) => p.featured);
 
-                {/* Swiper Slider */}
-                <div className="mt-12 relative px-12">
-                    <Swiper
-                        ref={swiperRef}
-                        modules={[Navigation, Pagination, Autoplay]}
-                        loop={true}
-                        slidesPerView={1}
-                        spaceBetween={30}
-                        breakpoints={{
-                            640: { slidesPerView: 1 },
-                            768: { slidesPerView: 2 },
-                            1024: { slidesPerView: 3 },
+  return (
+    <section ref={sectionRef} id="projects" className="section-pad overflow-hidden">
+      <div className="container-xl mb-10 md:mb-12">
+        <div className="flex items-center gap-4 mb-10">
+          <span className="text-mono-sm" style={{ color: "var(--color-muted)" }}>
+            006
+          </span>
+          <div className="hairline flex-1" />
+          <span className="text-mono-sm" style={{ color: "var(--color-muted)" }}>
+            SELECTED WORK
+          </span>
+        </div>
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="text-section-title">Projects</h2>
+          <span className="text-mono-sm hidden md:inline" style={{ color: "var(--color-muted)" }}>
+            SCROLL TO EXPLORE →
+          </span>
+        </div>
+      </div>
+
+      {/* Horizontal scroll gallery (desktop) / stacked (mobile) */}
+      <div ref={trackWrapperRef} className="w-full overflow-hidden">
+        <div
+          ref={galleryRef}
+          className="flex flex-col md:flex-row gap-6 md:gap-8 px-6 md:px-12 lg:px-16 md:w-max"
+        >
+          {featured.map((project, i) => {
+            const num = String(i + 1).padStart(2, "0");
+            const primaryUrl = project.liveUrl || project.githubUrl;
+
+            return (
+              <article
+                key={project.id}
+                className="project-card flex-shrink-0 w-full md:w-[480px] lg:w-[560px] group rounded-lg overflow-hidden transition-colors duration-300 hover:border-[var(--color-accent)]"
+                data-cursor-view
+                style={{
+                  border: "1px solid var(--color-border)",
+                  backgroundColor: "var(--color-bg)",
+                }}
+              >
+                {/* Visual block */}
+                <a
+                  href={primaryUrl || "#projects"}
+                  target={primaryUrl ? "_blank" : undefined}
+                  rel={primaryUrl ? "noopener noreferrer" : undefined}
+                  aria-label={`View ${project.title}`}
+                  className="block relative h-[220px] md:h-[270px] overflow-hidden"
+                  style={{ backgroundColor: "var(--color-card)" }}
+                >
+                  <div className="project-media-reveal w-full h-full">
+                    {project.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        loading="lazy"
+                        className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col justify-between p-6 transition-transform duration-500 ease-out group-hover:scale-105 relative">
+                        <div className="flex items-center justify-between">
+                          <span className="text-mono-sm" style={{ color: "var(--color-accent)" }}>
+                            {project.caption || `CASE ${num}`}
+                          </span>
+                          <span className="text-mono-sm" style={{ color: "var(--color-muted)" }}>
+                            {project.year}
+                          </span>
+                        </div>
+                        <span
+                          className="text-8xl md:text-9xl font-bold select-none self-end leading-none"
+                          style={{
+                            fontFamily: "var(--font-display)",
+                            color: "var(--color-border)",
+                          }}
+                        >
+                          {num}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </a>
+
+                <div className="p-6 md:p-8">
+                  <div className="flex items-center gap-4 mb-3">
+                    <span className="text-mono-sm" style={{ color: "var(--color-accent)" }}>
+                      {num}
+                    </span>
+                    <span className="text-mono-sm" style={{ color: "var(--color-muted)" }}>
+                      {project.year}
+                    </span>
+                  </div>
+
+                  <h3
+                    className="text-xl md:text-2xl font-semibold mb-3 group-hover:text-[var(--color-accent)] transition-colors"
+                    style={{ fontFamily: "var(--font-display)", color: "var(--color-fg)" }}
+                  >
+                    {project.title}
+                  </h3>
+
+                  <p className="text-sm mb-3 line-clamp-2" style={{ color: "var(--color-muted)" }}>
+                    {project.description}
+                  </p>
+
+                  <p className="text-sm mb-5" style={{ color: "var(--color-fg)", fontStyle: "italic" }}>
+                    ↗ {project.impact}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.techStack.slice(0, 5).map((tech) => (
+                      <span
+                        key={tech}
+                        className="text-mono-sm px-3 py-1 rounded-full"
+                        style={{
+                          border: "1px solid var(--color-border)",
+                          color: "var(--color-muted)",
                         }}
-                        autoplay={{
-                            delay: 4000,
-                            disableOnInteraction: true,
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.techStack.length > 5 && (
+                      <span
+                        className="text-mono-sm px-3 py-1 rounded-full"
+                        style={{
+                          border: "1px solid var(--color-border)",
+                          color: "var(--color-muted)",
                         }}
-                        pagination={{
-                            el: ".swiper-pagination",
-                            clickable: true,
-                        }}
-                        navigation={{
-                            nextEl: ".swiper-button-next",
-                            prevEl: ".swiper-button-prev",
-                        }}
-                        className="pb-16"
-                    >
-                        {projects.map((project) => (
-                            <SwiperSlide key={project.id} className="!w-96">
-                                <div 
-                                    className="glass p-6 rounded-2xl border border-white/10 cursor-pointer group h-full transition-all duration-300 hover:border-primary/50 hover:shadow-lg hover:shadow-primary/20"
-                                    onClick={() => setSelectedProject(project)}
-                                >
-                                    <div className="space-y-4">
-                                        {/* Project Header */}
-                                        <div>
-                                            <h3 className="text-2xl font-bold text-foreground group-hover:text-primary transition-colors mb-2">
-                                                {project.title}
-                                            </h3>
-                                            <p className="text-sm text-muted-foreground line-clamp-2">
-                                                {project.description}
-                                            </p>
-                                        </div>
+                      >
+                        +{project.techStack.length - 5}
+                      </span>
+                    )}
+                  </div>
 
-                                        {/* Tech Stack */}
-                                        <div className="flex flex-wrap gap-2">
-                                            {project.techStack.slice(0, 4).map((tech) => (
-                                                <span
-                                                    key={tech}
-                                                    className="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20"
-                                                >
-                                                    {tech}
-                                                </span>
-                                            ))}
-                                            {project.techStack.length > 4 && (
-                                                <span className="px-3 py-1 text-xs rounded-full bg-primary/10 text-primary border border-primary/20">
-                                                    +{project.techStack.length - 4} more
-                                                </span>
-                                            )}
-                                        </div>
-
-                                        {/* Links */}
-                                        <div className="flex gap-2 pt-4 border-t border-white/10">
-                                            {project.liveUrl && (
-                                                <Button
-                                                    size="sm"
-                                                    variant="ghost"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        window.open(project.liveUrl, "_blank");
-                                                    }}
-                                                    className="text-xs"
-                                                >
-                                                    <ExternalLink className="w-3 h-3 mr-1" />
-                                                    Live
-                                                </Button>
-                                            )}
-                                            {project.githubUrl && (
-                                                <Button
-                                                    size="sm"
-                                                    variant="ghost"
-                                                    onClick={(e) => {
-                                                        e.stopPropagation();
-                                                        window.open(project.githubUrl, "_blank");
-                                                    }}
-                                                    className="text-xs"
-                                                >
-                                                    <Github className="w-3 h-3 mr-1" />
-                                                    Code
-                                                </Button>
-                                            )}
-                                            <Button
-                                                size="sm"
-                                                variant="ghost"
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setSelectedProject(project);
-                                                }}
-                                                className="text-xs ml-auto"
-                                            >
-                                                Details
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </SwiperSlide>
-                        ))}
-                    </Swiper>
-
-                    {/* Custom Navigation Buttons */}
-                    <button className="swiper-button-prev absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-primary hover:bg-primary/80 text-white transition-all duration-300 shadow-lg">
-                        <ChevronLeft className="w-6 h-6" />
-                    </button>
-                    <button className="swiper-button-next absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 rounded-full bg-primary hover:bg-primary/80 text-white transition-all duration-300 shadow-lg">
-                        <ChevronRight className="w-6 h-6" />
-                    </button>
-
-                    {/* Custom Pagination */}
-                    <div className="swiper-pagination mt-8 flex justify-center gap-2 !static" />
+                  <div className="flex gap-5">
+                    {project.liveUrl && (
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-mono-sm magnetic-wrap hover:text-[var(--color-accent)] transition-colors"
+                        style={{ color: "var(--color-fg)" }}
+                      >
+                        Live Demo ↗
+                      </a>
+                    )}
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-mono-sm magnetic-wrap hover:text-[var(--color-accent)] transition-colors"
+                        style={{ color: "var(--color-fg)" }}
+                      >
+                        Source ↗
+                      </a>
+                    )}
+                  </div>
                 </div>
-            </div>
-
-            {/* Project Detail Modal */}
-            <Modal
-                isOpen={!!selectedProject}
-                onClose={() => setSelectedProject(null)}
-            >
-                {selectedProject && (
-                    <div className="space-y-6">
-                        <div>
-                            <h2 className="text-3xl font-bold mb-2">{selectedProject.title}</h2>
-                            <p className="text-muted-foreground">{selectedProject.description}</p>
-                        </div>
-
-                        <div className="space-y-4">
-                            <div>
-                                <h3 className="text-xl font-semibold mb-2 text-primary">Problem</h3>
-                                <p className="text-muted-foreground">{selectedProject.problem}</p>
-                            </div>
-
-                            <div>
-                                <h3 className="text-xl font-semibold mb-2 text-primary">Solution</h3>
-                                <p className="text-muted-foreground">{selectedProject.solution}</p>
-                            </div>
-
-                            <div>
-                                <h3 className="text-xl font-semibold mb-2 text-primary">Impact</h3>
-                                <p className="text-muted-foreground">{selectedProject.impact}</p>
-                            </div>
-                        </div>
-
-                        <div>
-                            <h3 className="text-xl font-semibold mb-3">Tech Stack</h3>
-                            <div className="flex flex-wrap gap-2">
-                                {selectedProject.techStack.map((tech) => (
-                                    <span
-                                        key={tech}
-                                        className="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20"
-                                    >
-                                        {tech}
-                                    </span>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div className="flex gap-3 pt-4 border-t border-border">
-                            {selectedProject.liveUrl && (
-                                <Button
-                                    onClick={() => window.open(selectedProject.liveUrl, "_blank")}
-                                >
-                                    <ExternalLink className="w-4 h-4 mr-2" />
-                                    View Live Demo
-                                </Button>
-                            )}
-                            {selectedProject.githubUrl && (
-                                <Button
-                                    variant="secondary"
-                                    onClick={() => window.open(selectedProject.githubUrl, "_blank")}
-                                >
-                                    <Github className="w-4 h-4 mr-2" />
-                                    View Code
-                                </Button>
-                            )}
-                        </div>
-                    </div>
-                )}
-            </Modal>
-
-            {/* Custom Swiper Styles */}
-            <style jsx global>{`
-                .swiper-pagination-bullet {
-                    background-color: var(--color-primary);
-                    opacity: 0.5;
-                }
-                .swiper-pagination-bullet-active {
-                    opacity: 1;
-                }
-                .swiper-button-prev::after,
-                .swiper-button-next::after {
-                    display: none;
-                }
-            `}</style>
-        </section>
-    );
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
 }
